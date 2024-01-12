@@ -6,5 +6,4 @@ services:
     container_name: yolov8-cpu
     volumes:
       - ~/trash/:/data/
-      - ~/yolov8/ultralytics/:/usr/src/ultralytics/
     tty: true
