@@ -6,4 +6,5 @@ services:
     container_name: yolov8-cpu
     volumes:
       - ~/trash/:/data/
+      - ~/train_data/:/usr/src/YOLOv8_trash/runs
     tty: true
