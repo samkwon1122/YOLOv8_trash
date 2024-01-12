@@ -15,5 +15,5 @@ do
     mv ~/trash/labels_100/val/"${i}"/*.txt ~/trash/val_100/labels/
 done
 
-#rm -rf ~/trash/images_100
-#rm -rf ~/trash/labels_100
+rm -rf ~/trash/images_100
+rm -rf ~/trash/labels_100
