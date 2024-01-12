@@ -14,19 +14,19 @@ RUN apt update \
     && apt install --no-install-recommends -y python3-pip git zip curl htop libgl1 libglib2.0-0 libpython3-dev gnupg g++ libusb-1.0-0
 
 # Create working directory
-WORKDIR /usr/src/ultralytics
+WORKDIR /usr/src/YOLOv8_trash
 
 # Copy contents
 # COPY . /usr/src/ultralytics  # git permission issues inside container
-RUN git clone https://github.com/ultralytics/ultralytics -b main /usr/src/ultralytics
-ADD https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt /usr/src/ultralytics/
+RUN git clone https://github.com/samkwon1122/YOLOv8_trash.git -b main /usr/src/YOLOv8_trash
+ADD https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt /usr/src/YOLOv8_trash/
 
 # Remove python3.11/EXTERNALLY-MANAGED or use 'pip install --break-system-packages' avoid 'externally-managed-environment' Ubuntu nightly error
 RUN rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 # Install pip packages
 RUN python3 -m pip install --upgrade pip wheel
-RUN pip install --no-cache -e ".[export]" lancedb --extra-index-url https://download.pytorch.org/whl/cpu
+RUN cd /usr/src/YOLOv8_trash/ultralytics/ && pip install --no-cache -e ".[export]" lancedb --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Run exports to AutoInstall packages
 #RUN yolo export model=tmp/yolov8n.pt format=edgetpu imgsz=32
@@ -39,8 +39,7 @@ RUN rm -rf tmp
 # Creates a symbolic link to make 'python' point to 'python3'
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
-COPY ./NanumGothic.ttf /usr/local/lib/python3.11/dist-packages/matplotlib/mpl-data/fonts/ttf
-COPY ./trash.yaml /usr/src/ultralytics/
+RUN mv /usr/src/YOLOv8_trash/NanumGothic.ttf /usr/local/lib/python3.11/dist-packages/matplotlib/mpl-data/fonts/ttf
 
 # Usage Examples -------------------------------------------------------------------------------------------------------
 
